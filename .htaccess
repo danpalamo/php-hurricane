@@ -1,0 +1,17 @@
+AuthName "hurricane"
+AuthType Basic
+AuthUserFile /etc/apache2/htpassword
+
+<limit GET>
+satisfy any
+order deny,allow
+deny from all
+allow from 127.0.0.1
+
+require valid-user
+</limit>
+
+# don't allow people to retrieve non-cgi executable files or our private data
+<FilesMatch ^(.*\.pm|.*\.pl|.*localconfig.*)$>
+  deny from all
+</FilesMatch>
