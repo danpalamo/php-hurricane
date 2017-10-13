@@ -1,4 +1,4 @@
-<?php 
+<?php
 include("include/common.php");
 session_start();
 
@@ -20,7 +20,7 @@ if(isset($_SESSION['POST']))
 	}
 	else if($_SESSION['POST']['Action'] == "Search")
 	{
-		$_SESSION['View']->Search = $_SESSION['POST'];		
+		$_SESSION['View']->Search = $_SESSION['POST'];
 	}
 	else if($_SESSION['POST']['Action'] == "Sort")
 	{
@@ -36,7 +36,7 @@ if(!isset($_SESSION['View']))
 
 if(isset($_SESSION['POST']['SearchType']))
 	$_SESSION['View']->searchType = $_SESSION['POST']['SearchType'];
-	
+
 $view = $_SESSION['View'];
 
 $sortColumn1 = ", IF(ISNULL(SUs.AP_ID) OR SUs.AP_ID = '', 1, 0) AS isnull";
@@ -49,7 +49,7 @@ $where2 = "";
 if($view->Search['SearchName'])
 {
 	$searchWords = explode(" ", $view->Search['SearchName']);
-	
+
 	$where1 .= " AND (SUs.CustomerName LIKE '%".clean($searchWords[0])."%'";
 	$where2 .= " AND (APs.LocationName LIKE '%".clean($searchWords[0])."%'";
 	for($i = 1; $i < count($searchWords); $i++)
@@ -64,7 +64,7 @@ if($view->Search['SearchName'])
 if($view->Search['SearchAddress'])
 {
 	$searchWords = explode(" ", $view->Search['SearchAddress']);
-	
+
 	$where1 .= " AND (SUs.CustomerAddress LIKE '%".clean($searchWords[0])."%'";
 	$where2 .= " AND (APs.LocationAddress LIKE '%".clean($searchWords[0])."%'";
 	for($i = 1; $i < count($searchWords); $i++)
@@ -112,7 +112,7 @@ if($view->Search['SearchSerialNumber'])
 if($view->Search['SearchPOP'] != "")
 {
 	$searchPOP = clean($view->Search['SearchPOP']);
-	
+
 	if($searchPOP == "0")
 	{
 		$where1 .= " AND APs.POP ='0'";
@@ -128,7 +128,7 @@ if($view->Search['SearchPOP'] != "")
 if($view->Search['SearchAPID'] != "")
 {
 	$searchAPID = clean($view->Search['SearchAPID']);
-	
+
 	if($searchAPID == "0")
 	{
 		$where1 .= " AND SUs.AP_ID = '0'";
@@ -144,7 +144,7 @@ if($view->Search['SearchAPID'] != "")
 if($view->Search['SearchSUID'])
 {
 	$searchSUID = clean($view->Search['SearchSUID']);
-	
+
 	$where1 .= " AND SUs.SUID ='".$searchSUID."'";
 	$where2 .= " AND '1'='0'";
 }
@@ -152,7 +152,7 @@ if($view->Search['SearchSUID'])
 if($view->Search['SearchAntenna'] != "")
 {
 	$searchAntenna = clean($view->Search['SearchAntenna']);
-	
+
 	if($searchAntenna == "0")
 	{
 		$where1 .= " AND SUs.LRAntenna_ID = '0'";
@@ -161,14 +161,14 @@ if($view->Search['SearchAntenna'] != "")
 	else
 	{
 		$where1 .= " AND SUs.LRAntenna_ID ='".$searchAntenna."'";
-		$where2 .= " AND '1'='0'";		
+		$where2 .= " AND '1'='0'";
 	}
 }
 
 if($view->Search['SearchIP'])
 {
 	$searchIP = clean($view->Search['SearchIP']);
-	
+
 	$where1 .= " AND SUs.IP LIKE '%".$searchIP."%'";
 	$where2 .= " AND APs.IP LIKE '%".$searchIP."%'";
 }
@@ -176,7 +176,7 @@ if($view->Search['SearchIP'])
 if($view->Search['SearchStatus'] != "")
 {
 	$searchStatus = clean($view->Search['SearchStatus']);
-	
+
 	if($searchStatus == "0")
 	{
 		$where1 .= " AND SUs.Status_ID = '0'";
@@ -186,7 +186,7 @@ if($view->Search['SearchStatus'] != "")
 	{
 		$where1 .= " AND SUs.Status_ID = '".$searchStatus."'";
 		$where2 .= " AND APs.Status_ID = '".$searchStatus."'";
-		
+
 	}
 }
 
@@ -211,7 +211,7 @@ if($view->Search['SearchNetNum'])
 if($view->Search['SearchNotes'])
 {
 	$searchWords = explode(" ", $view->Search['SearchNotes']);
-	
+
 	$where1 .= " AND (SUs.Notes LIKE '%".clean($searchWords[0])."%'";
 	$where2 .= " AND (APs.Notes LIKE '%".clean($searchWords[0])."%'";
 	for($i = 1; $i < count($searchWords); $i++)
@@ -270,7 +270,7 @@ if($view->Search['SearchInstaller'] != "")
 if($view->Search['SearchContract'] != "")
 {
 	$searchContract = clean($view->Search['SearchContract']);
-	
+
 	if($searchContract == "0")
 	{
 		$where1 .= " AND SUs.Contract_ID = '0'";
@@ -286,7 +286,7 @@ if($view->Search['SearchContract'] != "")
 if($view->Search['SearchDataRate'] != "")
 {
 	$searchDataRate = clean($view->Search['SearchDataRate']);
-	
+
 	if($searchDataRate == "0")
 	{
 		$where1 .= " AND SUs.DataRate_ID = '0'";
@@ -304,11 +304,11 @@ while ($r = mysqli_fetch_array($t)) {
   $dataRateNames[$r['ID']] = $r['DataRate'];
 }
 
-$search = "(SELECT SUs.*, 'SU' AS EquipmentType, APs.APID".$sortColumn1.", '0' AS POP FROM SUs, APs WHERE SUs.AP_ID = APs.ID".$where1.") UNION 
+$search = "(SELECT SUs.*, 'SU' AS EquipmentType, APs.APID".$sortColumn1.", '0' AS POP FROM SUs, APs WHERE SUs.AP_ID = APs.ID".$where1.") UNION
 (SELECT ID, InventoryNumber, SerialNumber, ID, NULL, '0', MAC, IP, Status_ID,
-LocationName, LocationAddress, LocationCity, LocationState, LocationZIP, LocationGeocode, 
+LocationName, LocationAddress, LocationCity, LocationState, LocationZIP, LocationGeocode,
 LocationPhone1, LocationPhone2, LocationPhone3, NULL, InstallDate, NULL, NULL, NULL, NULL, NULL, Notes, NULL, 'AP' as EquipmentType, APID".$sortColumn2.", POP
-FROM APs WHERE APs.ID > 0".$where2.")".$where.$orderBy;
+FROM APs WHERE APs.ID > 0".$where2.")".$where1.$orderBy;
 
 $searchResults = mysqli_query($dblink,$search) or die(mysqli_error($dblink));
 //echo $search;
@@ -509,8 +509,8 @@ if(isset($searchResults))
 		<th>IP
 		<th>Status
 		<th>DataRate
-<!--		<th>Spd_Dn --> 
-<!--		<th>Spd_Up --> 
+<!--		<th>Spd_Dn -->
+<!--		<th>Spd_Up -->
 		<th>Name
 		<th class="sorttable_alpha">Network Number
 		<th colspan=4>Address
@@ -524,11 +524,11 @@ if(isset($searchResults))
 	while($row = mysqli_fetch_array($searchResults))
 	{
 		$count++;
-		
+
 		echo '<tr id="'.$row['EquipmentType'].$row['ID'].'" ondblclick=\'HideTooltip(); EditRow(this.id);\' style="background-color:'.(($StatusRow = mysqli_fetch_array(mysqli_query($dblink,"SELECT RowColor FROM Statuses WHERE ID = '".$row['Status_ID']."'"))) ? $StatusRow['RowColor'] : "").'">';
 		echo '<td><a onclick=\'HideTooltip(); EditRow(this.parentNode.parentNode.id); return false;\' href=\'#\'>'.$row['InventoryNumber'].'</a>';
 		//echo '<td>'. ltrim($row['SerialNumber'], "0");
-		
+
 		echo '<td>';
 		{
 			if($APRow = mysqli_fetch_array(mysqli_query($dblink,"SELECT APID, POP FROM APs WHERE ID = '".$row['AP_ID']."'")))
@@ -537,7 +537,7 @@ if(isset($searchResults))
 				echo '<a target="_blank" href="//tsunami.somedomain/'.$APRow['APID'].'">'.$APRow['APID'].'</a>';
 			}
 		}
-				
+
 		//echo '<td>';
 		//if($row['EquipmentType'] == "SU")
 		//{
@@ -556,12 +556,12 @@ if(isset($searchResults))
 		echo '<td>';
 		if($StatusRow = mysqli_fetch_array(mysqli_query($dblink,"SELECT Status FROM Statuses WHERE ID = '".$row['Status_ID']."'")))
 			echo $StatusRow['Status'];
-	
+
 		echo '<td>'.$dataRateNames[$row['DataRate_ID']];
 //		echo '<td>'.na;
 //		echo '<td>'.$row['Speed_Down'];
 //		echo '<td>'.$row['Speed_Up'];
-	
+
 		echo '<td>'.$row['CustomerName'];
 
 //		$tooltip = "";
