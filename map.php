@@ -80,8 +80,8 @@ connectToDB($servername, $dbname, $dbusername, $dbpassword);
 						<option value="">Any</option>
 						<option value="0" <?php if($_SESSION['View']->Search['SearchAPID'] == "0") echo ' selected="selected"'; ?>>None</option>
 						<?php
-						$queryResults = mysql_query("SELECT * FROM APs ORDER BY APID ASC") or die(mysql_error());
-						while($row = mysql_fetch_array($queryResults))
+						$queryResults = mysqli_query($dblink,"SELECT * FROM APs ORDER BY APID ASC") or die(mysqli_error($dblink));
+						while($row = mysqli_fetch_array($queryResults))
 						{
 							if($row['APID'])
 							{
@@ -98,8 +98,8 @@ connectToDB($servername, $dbname, $dbusername, $dbpassword);
 						<option value="">Any</option>
 						<option value="0" <?php if($_SESSION['View']->Search['SearchAntenna'] == "0") echo ' selected="selected"'; ?>>None</option>
 						<?php
-						$queryResults = mysql_query("SELECT * FROM LRAntennas ORDER BY LRAntenna ASC") or die(mysql_error());
-						while($row = mysql_fetch_array($queryResults))
+						$queryResults = mysqli_query($dblink,"SELECT * FROM LRAntennas ORDER BY LRAntenna ASC") or die(mysqli_error($dblink));
+						while($row = mysqli_fetch_array($queryResults))
 						{
 							if($row['LRAntenna'])
 							{
@@ -118,8 +118,8 @@ connectToDB($servername, $dbname, $dbusername, $dbpassword);
 						<option value="">Any</option>
 						<option value="0" <?php if($_SESSION['View']->Search['SearchStatus'] == "0") echo ' selected="selected"'; ?>>None</option>
 						<?php
-						$queryResults = mysql_query("SELECT * FROM Statuses ORDER BY Status ASC") or die(mysql_error());
-						while($row = mysql_fetch_array($queryResults))
+						$queryResults = mysqli_query($dblink,"SELECT * FROM Statuses ORDER BY Status ASC") or die(mysqli_error($dblink));
+						while($row = mysqli_fetch_array($queryResults))
 						{
 							if($row['Status'])
 							{
@@ -147,8 +147,8 @@ connectToDB($servername, $dbname, $dbusername, $dbpassword);
 						<option value="">Any</option>
 						<option value="0" <?php if($_SESSION['View']->Search['SearchInstaller'] == "0") echo ' selected="selected"'; ?>>None</option>
 						<?php
-						$queryResults = mysql_query("SELECT * FROM Installers ORDER BY Installer ASC") or die(mysql_error());
-						while($row = mysql_fetch_array($queryResults))
+						$queryResults = mysqli_query($dblink,"SELECT * FROM Installers ORDER BY Installer ASC") or die(mysqli_error($dblink));
+						while($row = mysqli_fetch_array($queryResults))
 						{
 							if($row['Installer'])
 							{
@@ -165,8 +165,8 @@ connectToDB($servername, $dbname, $dbusername, $dbpassword);
 						<option value="">Any</option>
 						<option value="0" <?php if($_SESSION['View']->Search['SearchContract'] == "0") echo ' selected="selected"'; ?>>None</option>
 						<?php
-						$queryResults = mysql_query("SELECT * FROM Contracts ORDER BY Contract ASC") or die(mysql_error());
-						while($row = mysql_fetch_array($queryResults))
+						$queryResults = mysqli_query($dblink,"SELECT * FROM Contracts ORDER BY Contract ASC") or die(mysqli_error($dblink));
+						while($row = mysqli_fetch_array($queryResults))
 						{
 							if($row['Contract'])
 							{
@@ -183,8 +183,8 @@ connectToDB($servername, $dbname, $dbusername, $dbpassword);
 						<option value="">Any</option>
 						<option value="0" <?php if($_SESSION['View']->Search['SearchDataRate'] == "0") echo ' selected="selected"'; ?>>None</option>
 						<?php
-						$queryResults = mysql_query("SELECT * FROM DataRates ORDER BY DataRate ASC") or die(mysql_error());
-						while($row = mysql_fetch_array($queryResults))
+						$queryResults = mysqli_query($dblink,"SELECT * FROM DataRates ORDER BY DataRate ASC") or die(mysqli_error($dblink));
+						while($row = mysqli_fetch_array($queryResults))
 						{
 							if($row['DataRate'])
 							{
